@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class BankAccount(BaseModel):
-    id: int = 0
+    id: int
     user_id: int
     balance: float
     account_type: str

@@ -47,7 +47,7 @@ class BankAccount(Base):
 class Loan(Base):
     __tablename__ = "loans"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(ForeignKey(User.id), index=True)
+    user_id = Column(ForeignKey(User.id), unique=False, index=True)
     amount = Column(Float)
     status = Column(String, index=True)
     start_date = Column(DateTime, index=True, default=datetime.datetime.now())
@@ -58,8 +58,8 @@ class Transaction(Base):
     __tablename__ = "transactions"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(ForeignKey(User.id), index=True)
-    sender_account_id = Column(ForeignKey(BankAccount.id), index=True)
-    receiver_account_id = Column(ForeignKey(BankAccount.id), index=True)
+    sender_account_id = Column(ForeignKey(BankAccount.id), unique=False, index=True)
+    receiver_account_id = Column(ForeignKey(BankAccount.id), unique=False, index=True)
     amount = Column(Float)
     date = Column(DateTime, index=True)
     transaction_type = Column(String, index=True)
@@ -68,7 +68,7 @@ class Transaction(Base):
 class Bonus(Base):
     __tablename__ = "bonuses"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(ForeignKey(User.id), index=True)
+    user_id = Column(ForeignKey(User.id), unique=False, index=True)
     amount = Column(Float)
     date = Column(DateTime, index=True)
 
@@ -82,7 +82,7 @@ class Category(Base):
 class Subcategory(Base):
     __tablename__ = "subcategories"
     id = Column(Integer, primary_key=True, index=True)
-    category_id = Column(ForeignKey(Category.id), index=True)
+    category_id = Column(ForeignKey(Category.id), unique=False, index=True)
     title = Column(String)
 
 
