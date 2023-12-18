@@ -42,3 +42,55 @@ class BankAccount(Base):
     account_type = Column(String, index=True)
     card_number = Column(String, unique=True, index=True)
     opening_date = Column(DateTime, index=True, default=datetime.datetime.now(), info={"read_only": True})
+
+
+class Loan(Base):
+    __tablename__ = "loans"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(ForeignKey(User.id), index=True)
+    amount = Column(Float)
+    status = Column(String, index=True)
+    start_date = Column(DateTime, index=True, default=datetime.datetime.now())
+    end_date = Column(DateTime, index=True)
+
+
+class Transaction(Base):
+    __tablename__ = "transactions"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(ForeignKey(User.id), index=True)
+    sender_account_id = Column(ForeignKey(BankAccount.id), index=True)
+    receiver_account_id = Column(ForeignKey(BankAccount.id), index=True)
+    amount = Column(Float)
+    date = Column(DateTime, index=True)
+    transaction_type = Column(String, index=True)
+
+
+class Bonus(Base):
+    __tablename__ = "bonuses"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(ForeignKey(User.id), index=True)
+    amount = Column(Float)
+    date = Column(DateTime, index=True)
+
+
+class Category(Base):
+    __tablename__ = "categories"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+
+
+class Subcategory(Base):
+    __tablename__ = "subcategories"
+    id = Column(Integer, primary_key=True, index=True)
+    category_id = Column(ForeignKey(Category.id), index=True)
+    title = Column(String)
+
+
+class Payment(Base):
+    __tablename__ = "payments"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(ForeignKey(User.id), index=True)
+    category_id = Column(ForeignKey(Category.id), index=True)
+    subcategory_id = Column(ForeignKey(Subcategory.id), index=True)
+    amount = Column(Float)
+    date = Column(DateTime, index=True)

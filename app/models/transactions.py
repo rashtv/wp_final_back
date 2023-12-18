@@ -1,10 +1,16 @@
-from pydantic import BaseModel
+from datetime import datetime
 
-from models.users import User
+from pydantic import BaseModel
 
 
 class Transaction(BaseModel):
-    # TODO
+    id: int
+    user_id: int
+    sender_account_id: int
+    receiver_account_id: int
+    amount: float
+    date: datetime
+    transaction_type: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
