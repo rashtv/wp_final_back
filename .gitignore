@@ -1,0 +1,8 @@
+# Virtual Environment
+venv
+
+# JetBrains IDEA folder
+.idea
+
+# Database
+jusan.db
