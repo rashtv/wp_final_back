@@ -17,7 +17,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost",
-    "http://localhost:5173",  # Update with your Vue.js development server URL
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
