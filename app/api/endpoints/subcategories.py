@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api.crud.subcategories import (
-    create_subcategory, get_subcategory, get_all_subcategories, update_subcategory, delete_subcategory
+    create_subcategory, get_subcategory, get_all_subcategories, update_subcategory, delete_subcategory,
+    get_all_subcategories_by_category_id
 )
 from app.database import get_db
 
@@ -27,6 +28,11 @@ def read_subcategory_endpoint(subcategory_id: int, db: Session = Depends(get_db)
 @router.get("/", response_model=list[Subcategory])
 def read_all_subcategories_endpoint(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return get_all_subcategories(db, skip=skip, limit=limit)
+
+
+@router.get("/by_category_id/{category_id}", response_model=list[Subcategory])
+def read_all_subcategories_by_category_id_endpoint(category_id: int, db: Session = Depends(get_db)):
+    return get_all_subcategories_by_category_id(db, category_id)
 
 
 @router.put("/{subcategory_id}", response_model=Subcategory)

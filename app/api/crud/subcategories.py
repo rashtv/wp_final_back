@@ -24,6 +24,10 @@ def get_all_subcategories(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Subcategory).offset(skip).limit(limit).all()
 
 
+def get_all_subcategories_by_category_id(db: Session, category_id: int):
+    return db.query(Subcategory).filter(Subcategory.category_id == category_id).all()
+
+
 def update_subcategory(db: Session, subcategory_id: int, new_subcategory_data: dict):
     db_subcategory = db.query(Subcategory).filter(Subcategory.id == subcategory_id).first()
     if db_subcategory:
