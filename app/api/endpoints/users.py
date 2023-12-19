@@ -91,7 +91,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/{id}", response_model=User)
+@router.get("/{user_id}", response_model=User)
 def read_user_by_id_endpoint(user_id: int, db: Session = Depends(get_db)):
     db_user = get_user(db, user_id)
     if db_user is None:
