@@ -18,7 +18,10 @@ router = APIRouter()
 
 @router.post("/", response_model=Payment)
 def create_payment_endpoint(payment: Payment, db: Session = Depends(get_db)):
-    return create_payment(db, payment)
+    payment = create_payment(db, payment)
+    if payment is None:
+        raise HTTPException(status_code=400)
+    return payment
 
 
 @router.get("/{payment_id}", response_model=Payment)

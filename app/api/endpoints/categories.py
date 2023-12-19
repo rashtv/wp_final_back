@@ -1,3 +1,5 @@
+import random
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -51,3 +53,9 @@ def delete_category_endpoint(category_id: int, db: Session = Depends(get_db)):
     if db_category is None:
         raise HTTPException(status_code=404, detail="Category not found")
     return db_category
+
+
+@router.get("/get_price_by_category")
+def get_price_by_category(category_id: int, sub_category_id: int, db: Session = Depends(get_db)):
+    # ideally async response to remote server to get price
+    return {"amount": random.randint(100, 1000)}

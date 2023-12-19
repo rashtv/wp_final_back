@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.database import User
+from app.database import User, BankAccount
 
 
 def create_user(db: Session, user: User):
@@ -47,3 +47,9 @@ def delete_user(db: Session, user_id: int):
         db.delete(db_user)
         db.commit()
     return db_user
+
+
+def search_user_by_card_number(db: Session, card_number: str):
+    print(card_number)
+    back_acc = db.query(BankAccount).filter(BankAccount.card_number == card_number).first()
+    return back_acc

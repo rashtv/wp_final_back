@@ -1,10 +1,25 @@
 import datetime
 
 from sqlalchemy.orm import Session
-from app.database import Payment
+from app.database import Payment, BankAccount, User
 
 
-def create_payment(db: Session, payment: Payment):
+def create_payment(db: Session, payment: Payment, use_bonus: bool = False):
+    payer_acc = db.query(BankAccount).filter(BankAccount.user_id == payment.user_id).first()
+    payer = db.query(User).filter(User.id == payment.user_id).first()
+    to_pay = payment.amount
+    from_bonus = 0
+    if use_bonus:
+        from_bonus = min(to_pay, payer.bonus_balance)
+    to_pay -= from_bonus
+    print(to_pay, from_bonus)
+    if payer_acc is None:
+        return None
+    if to_pay > payer_acc.balance:
+        return None
+    payer_acc.balance -= to_pay
+    payer.bonus_balance -= from_bonus
+    payer.bonus_balance += to_pay / 100
     p = Payment(
         user_id=payment.user_id,
         category_id=payment.category_id,
@@ -12,6 +27,8 @@ def create_payment(db: Session, payment: Payment):
         amount=payment.amount,
         date=payment.date,
     )
+    db.add(payer_acc)
+    db.add(payer)
     db.add(p)
     db.commit()
     db.refresh(p)

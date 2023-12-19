@@ -17,7 +17,10 @@ router = APIRouter()
 
 @router.post("/", response_model=Transaction)
 def create_transaction_endpoint(transaction: Transaction, db: Session = Depends(get_db)):
-    return create_transaction(db, transaction)
+    t = create_transaction(db, transaction)
+    if t is None:
+        raise HTTPException(status_code=400)
+    return t
 
 
 @router.get("/{transaction_id}", response_model=Transaction)

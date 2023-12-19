@@ -3,6 +3,7 @@ from app.database import Transaction, BankAccount
 
 
 def create_transaction(db: Session, transaction: Transaction):
+    print(transaction)
     sender_acc = db.query(BankAccount).filter(BankAccount.user_id == transaction.user_id).first()
     receiver_acc = db.query(BankAccount).filter(BankAccount.user_id == transaction.receiver_account_id).first()
     if sender_acc is None or receiver_acc is None:

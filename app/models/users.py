@@ -8,6 +8,15 @@ class User(BaseModel):
     password: str
     phone_number: str
     profile_photo: str
+    bonus_balance: float
+
+    class Config:
+        from_attributes = True
+
+
+class UserOut(User):
+    id: int
+    bonus_balance: float
 
     class Config:
         from_attributes = True
