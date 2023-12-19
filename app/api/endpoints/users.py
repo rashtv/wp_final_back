@@ -8,7 +8,7 @@ from app.api.crud.users import (
     get_user_by_username,
     get_all_users,
     update_user,
-    delete_user,
+    delete_user, get_user,
 )
 from app.database import get_db, Token, User as dbUser
 from app.models.users import User
@@ -89,6 +89,14 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
     db.commit()
 
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+@router.get("/{id}", response_model=User)
+def read_user_by_id_endpoint(user_id: int, db: Session = Depends(get_db)):
+    db_user = get_user(db, user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
 
 
 @router.get("/by_username/{username}", response_model=dict)
