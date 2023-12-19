@@ -23,6 +23,10 @@ def get_bank_account(db: Session, bank_account_id: int):
     return db.query(BankAccount).filter(BankAccount.id == bank_account_id).first()
 
 
+def get_bank_account_by_user_id(db: Session, user_id: int):
+    return db.query(BankAccount).filter(BankAccount.user_id == user_id).first()
+
+
 def get_bank_account_by_card_number(db: Session, card_number: str):
     return db.query(BankAccount).filter(BankAccount.card_number == card_number).first()
 

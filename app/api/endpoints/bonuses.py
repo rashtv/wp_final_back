@@ -6,7 +6,7 @@ from app.api.crud.bonuses import (
     get_bonus,
     get_all_bonuses,
     update_bonus,
-    delete_bonus
+    delete_bonus, get_all_bonuses_by_user_id
 )
 
 from app.database import get_db
@@ -32,6 +32,11 @@ def read_bonus_endpoint(bonus_id: int, db: Session = Depends(get_db)):
 @router.get("/", response_model=list[Bonus])
 def read_all_bonuses_endpoint(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return get_all_bonuses(db, skip=skip, limit=limit)
+
+
+@router.get("/by_user_id/{user_id}", response_model=list[Bonus])
+def read_all_bonuses_by_user_id_endpoint(user_id: int, db: Session = Depends(get_db)):
+    return get_all_bonuses_by_user_id(db, user_id)
 
 
 @router.put("/{bonus_id}", response_model=Bonus)

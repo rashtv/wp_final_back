@@ -91,13 +91,15 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/by_username/{username}", response_model=User)
-def read_user_by_username_endpoint(username: str, current_user: dbUser = Depends(get_current_user), db: Session = Depends(get_db)):
-    print(current_user)
+@router.get("/by_username/{username}", response_model=dict)
+def read_user_id_by_username_endpoint(
+        username: str,
+        db: Session = Depends(get_db)
+):
     db_user = get_user_by_username(db, username)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    return db_user
+    return {"id": db_user.id}
 
 
 @router.get("/", response_model=list[User])

@@ -6,7 +6,7 @@ from app.api.crud.payments import (
     get_payment,
     get_all_payments,
     update_payment,
-    delete_payment
+    delete_payment, get_all_payments_by_user_id
 )
 
 from app.database import get_db
@@ -32,6 +32,11 @@ def read_payment_endpoint(payment_id: int, db: Session = Depends(get_db)):
 @router.get("/", response_model=list[Payment])
 def read_all_payments_endpoint(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return get_all_payments(db, skip=skip, limit=limit)
+
+
+@router.get("/by_user_id/{user_id}", response_model=list[Payment])
+def read_all_payments_by_user_id_endpoint(user_id: int, db: Session = Depends(get_db)):
+    return get_all_payments_by_user_id(db, user_id)
 
 
 @router.put("/{payment_id}", response_model=Payment)

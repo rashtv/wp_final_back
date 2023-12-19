@@ -27,6 +27,10 @@ def get_all_payments(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Payment).offset(skip).limit(limit).all()
 
 
+def get_all_payments_by_user_id(db: Session, user_id: int):
+    return db.query(Payment).filter(Payment.user_id == user_id).all()
+
+
 def update_payment(db: Session, payment_id: int, new_payment_data: dict):
     db_payment = db.query(Payment).filter(Payment.id == payment_id).first()
     if db_payment:

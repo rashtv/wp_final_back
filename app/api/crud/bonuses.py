@@ -25,6 +25,10 @@ def get_all_bonuses(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Bonus).offset(skip).limit(limit).all()
 
 
+def get_all_bonuses_by_user_id(db: Session, user_id: int):
+    return db.query(Bonus).filter(Bonus.user_id == user_id).all()
+
+
 def update_bonus(db: Session, bonus_id: int, new_transaction_data: dict):
     db_bonus = db.query(Bonus).filter(Bonus.id == bonus_id).first()
     if db_bonus:

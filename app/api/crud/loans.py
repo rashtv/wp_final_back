@@ -27,6 +27,10 @@ def get_all_loans(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Loan).offset(skip).limit(limit).all()
 
 
+def get_all_loans_by_user_id(db: Session, user_id: int):
+    return db.query(Loan).filter(Loan.user_id == user_id).all()
+
+
 def update_loan(db: Session, loan_id: int, new_loan_data: dict):
     db_loan = db.query(Loan).filter(Loan.id == loan_id).first()
     if db_loan:

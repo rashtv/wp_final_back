@@ -28,6 +28,10 @@ def get_all_transactions(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Transaction).offset(skip).limit(limit).all()
 
 
+def get_all_transactions_by_user_id(db: Session, user_id: int):
+    return db.query(Transaction).filter(Transaction.user_id == user_id).all()
+
+
 def update_transaction(db: Session, transaction_id: int, new_transaction_data: dict):
     db_transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
     if db_transaction:

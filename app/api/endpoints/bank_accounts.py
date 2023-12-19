@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.api.crud.bank_accounts import (
     create_bank_account, get_bank_account, get_bank_account_by_card_number, get_all_bank_accounts, update_bank_account,
-    delete_bank_account
+    delete_bank_account, get_bank_account_by_user_id
 )
 from app.models.bank_accounts import BankAccount
 
@@ -18,6 +18,14 @@ def create_bank_account_endpoint(bank_account: BankAccount, db: Session = Depend
 @router.get("/{bank_account_id}", response_model=BankAccount)
 def read_bank_account_endpoint(bank_account_id: int, db: Session = Depends(get_db)):
     db_bank_account = get_bank_account(db, bank_account_id)
+    if db_bank_account is None:
+        raise HTTPException(status_code=404, detail="Bank account not found")
+    return db_bank_account
+
+
+@router.get("/by_user_id/{user_id}", response_model=BankAccount)
+def read_bank_account_by_user_id_endpoint(user_id: int, db: Session = Depends(get_db)):
+    db_bank_account = get_bank_account_by_user_id(db, user_id)
     if db_bank_account is None:
         raise HTTPException(status_code=404, detail="Bank account not found")
     return db_bank_account
