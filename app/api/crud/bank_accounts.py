@@ -6,7 +6,6 @@ from app.database import BankAccount
 
 def create_bank_account(db: Session, bank_account: BankAccount):
     ba = BankAccount(
-        id=bank_account.id,
         user_id=bank_account.user_id,
         balance=bank_account.balance,
         account_type=bank_account.account_type,

@@ -6,7 +6,6 @@ from app.database import Loan
 
 def create_loan(db: Session, loan: Loan):
     lo = Loan(
-        id=loan.id,
         user_id=loan.user_id,
         amount=loan.amount,
         status=loan.status,

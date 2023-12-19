@@ -6,7 +6,6 @@ from app.database import Transaction
 
 def create_transaction(db: Session, transaction: Transaction):
     t = Transaction(
-        id=transaction.id,
         user_id=transaction.user_id,
         sender_account_id=transaction.sender_account_id,
         receiver_account_id=transaction.receiver_account_id,

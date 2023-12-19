@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 
 class Loan(BaseModel):
-    id: int
     user_id: int
     amount: float
     status: str

@@ -6,7 +6,6 @@ from app.database import Bonus
 
 def create_bonus(db: Session, bonus: Bonus):
     b = Bonus(
-        id=bonus.id,
         user_id=bonus.user_id,
         amount=bonus.amount,
         date=bonus.date,

@@ -6,7 +6,6 @@ from app.database import Payment
 
 def create_payment(db: Session, payment: Payment):
     p = Payment(
-        id=payment.id,
         user_id=payment.user_id,
         category_id=payment.category_id,
         subcategory_id=payment.subcategory_id,

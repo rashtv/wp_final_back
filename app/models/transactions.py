@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 
 class Transaction(BaseModel):
-    id: int
     user_id: int
     sender_account_id: int
     receiver_account_id: int
